@@ -3,11 +3,11 @@ package com.astend.android.a0_100acceleration.model;
 import android.location.Criteria;
 import android.location.Location;
 
-public class LocationManager extends Location {
+public class LocationMng extends Location {
 
   private boolean bUseMetricUnits = false;
 
-  public LocationManager(Location location,boolean bUseMetricUnits) {
+  public LocationMng(Location location, boolean bUseMetricUnits) {
     super(location);
     setAccuracy(Criteria.ACCURACY_FINE);
     this.bUseMetricUnits = bUseMetricUnits;

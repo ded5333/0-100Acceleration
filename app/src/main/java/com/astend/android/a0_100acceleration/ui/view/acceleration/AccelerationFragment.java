@@ -1,9 +1,13 @@
 package com.astend.android.a0_100acceleration.ui.view.acceleration;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,13 +16,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.astend.android.a0_100acceleration.R;
+import com.astend.android.a0_100acceleration.model.SpeedManager;
 import com.astend.android.a0_100acceleration.ui.presenter.AccelerationPresenter;
 import com.astend.android.a0_100acceleration.ui.presenter.AccelerationPresenterImpl;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class AccelerationFragment extends Fragment implements AccelerationFragmentVIew {
-
   public AccelerationPresenter presenter;
   public TextView tvTime;
   public TextView tvSpeed;
@@ -34,6 +38,15 @@ public class AccelerationFragment extends Fragment implements AccelerationFragme
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    if (ActivityCompat.checkSelfPermission(getContext(),
+        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+        getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+
+      return;
+    }
+      presenter = new AccelerationPresenterImpl(this, requireContext());
+
 
   }
 
@@ -45,8 +58,8 @@ public class AccelerationFragment extends Fragment implements AccelerationFragme
     tvSpeed = view.findViewById(R.id.tvSpeed);
     tvTime = view.findViewById(R.id.tvTime);
 
-    presenter = new AccelerationPresenterImpl(this);
     presenter.getData();
+
 
 
 
@@ -55,7 +68,7 @@ public class AccelerationFragment extends Fragment implements AccelerationFragme
 
   @Override
   public void showProgressSpeed(float speed) {
-    tvSpeed.setText((int) speed);
+    tvSpeed.setText("" + speed);
 
   }
 
